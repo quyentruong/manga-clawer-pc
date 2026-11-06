@@ -1,0 +1,5 @@
+allowBuilds:
+  '@parcel/watcher': true
+  electron: true
+  onnxruntime-node: true
+  sharp: true

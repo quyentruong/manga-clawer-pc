@@ -1,5 +1,22 @@
+const electron = require('electron');
+if (typeof electron === 'string') {
+  // Chạy trong môi trường có ELECTRON_RUN_AS_NODE=1 (như terminal tích hợp của IDE)
+  const { spawn } = require('child_process');
+  const env = { ...process.env };
+  delete env.ELECTRON_RUN_AS_NODE;
+  const child = spawn(electron, process.argv.slice(1), {
+    stdio: 'inherit',
+    env,
+  });
+  child.on('close', (code, signal) => {
+    if (signal) process.kill(process.pid, signal);
+    else process.exit(code || 0);
+  });
+  return;
+}
+
 const fs = require('fs');
-const { app, BrowserWindow, session, shell } = require('electron');
+const { app, BrowserWindow, session, shell } = electron;
 const path = require('path');
 
 function loadProjectEnvFile() {
