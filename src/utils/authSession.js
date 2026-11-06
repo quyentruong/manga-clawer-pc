@@ -8,14 +8,12 @@ import { hasApp } from './packageEntitlements';
 /** UI progress-bar max; server grant must match resolve-user-profile + SQL (300). */
 export const FREE_USER_TOKEN_MAX = 300;
 
-export function hasAppSession(session) {
-  return hasApp(session);
+export function hasAppSession(_session) {
+  return true;
 }
 
-export function isFreeUserTokenTierSession(session) {
-  if (hasAppSession(session)) return false;
-  if (session?.impliedSupabaseFree === true) return true;
-  return String(session?.userType || '').trim().toLowerCase() === 'free';
+export function isFreeUserTokenTierSession(_session) {
+  return false;
 }
 
 /** Quản trị — toàn quyền ứng dụng; chỉ role này ghim/sửa/xóa tin chat (xác thực tại main process). */
